@@ -1,0 +1,9 @@
+name: Utils
+version: '${project.version}'
+main: utils.Utils
+api-version: 1.16
+authors: [ Valless ]
+depend: [ spark ]
+commands:
+  banipmask:
+    permission: bans.banipmask
