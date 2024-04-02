@@ -1,11 +1,14 @@
 package utils.Gradient;
 
+import java.io.Serial;
+
 public class NumberRangeException extends RainbowException {
 	
+	@Serial
 	private static final long serialVersionUID = 4165381497766700805L;
 	
-	private double minNum;
-	private double maxNum;	
+	private final double minNum;
+	private final double maxNum;
 	
 	public NumberRangeException (double minNumber, double maxNumber) {
 		super();

@@ -123,12 +123,10 @@ public class Rainbow {
 			}
 		}
 		// These exceptions are theoretically impossible, so rethrow as unchecked exceptions			
-		catch (HomogeneousRainbowException e) {
+		catch (HomogeneousRainbowException | InvalidColourException e) {
 			throw new RuntimeException(e);
-		} catch (InvalidColourException e) {
-			throw new RuntimeException(e);
-		}		
-	}	
+		}
+    }
 	
 	/**
 	 * Same as colourAt(double number)

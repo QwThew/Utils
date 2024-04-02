@@ -3,7 +3,10 @@ version: '${project.version}'
 main: utils.Utils
 api-version: 1.16
 authors: [ Valless ]
-depend: [ spark ]
+depend:
+  - spark
+  - PlaceholderAPI
+  - LuckPerms
 commands:
   banipmask:
     permission: bans.banipmask

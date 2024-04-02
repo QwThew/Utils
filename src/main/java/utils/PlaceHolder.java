@@ -23,6 +23,7 @@ import java.lang.management.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static utils.Gradient.Rainbow.createGradient;
 
@@ -31,8 +32,7 @@ public class PlaceHolder extends PlaceholderExpansion {
     private final ArrayList<String> gradient;
     private final Spark spark;
 
-    public PlaceHolder(Plugin pl) {
-
+    public PlaceHolder() {
         gradient = createGradient(100, new String[]{"#81ff00", "#ffff00", "#ff4400"});
         spark = SparkProvider.get();
     }
@@ -82,6 +82,7 @@ public class PlaceHolder extends PlaceholderExpansion {
             case "mspt" -> {
 
                 GenericStatistic<DoubleAverageInfo, StatisticWindow.MillisPerTick> mspt = spark.mspt();
+                assert mspt != null;
                 DoubleAverageInfo msptLastMin = mspt.poll(StatisticWindow.MillisPerTick.SECONDS_10);
                 double min = msptLastMin.min();
                 double median = msptLastMin.median();
@@ -99,7 +100,7 @@ public class PlaceHolder extends PlaceholderExpansion {
             }
             case "suffix" -> {
                 String title = PlaceholderAPI.setPlaceholders(p, "%vault_suffix%");
-                return title.length() > 0 ? title : "§cНет";
+                return !title.isEmpty() ? title : "§cНет";
             }
             case "group_time" -> {
                 LuckPerms api = LuckPermsProvider.get();
@@ -108,8 +109,8 @@ public class PlaceHolder extends PlaceholderExpansion {
                         .stream()
                         .filter(Node::hasExpiry)
                         .filter(node -> !node.hasExpired()).toList();
-                if (l.size() == 0) return "∞";
-                long time = l.get(0).getExpiry().getEpochSecond() - System.currentTimeMillis() / 1000;
+                if (l.isEmpty()) return "∞";
+                long time = Objects.requireNonNull(l.get(0).getExpiry()).getEpochSecond() - System.currentTimeMillis() / 1000;
                 if (time < 0) return "";
                 if (time == 0) return "∞";
                 long days = time / 86400;

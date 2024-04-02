@@ -33,11 +33,12 @@ public final class Utils extends JavaPlugin implements CommandExecutor, Listener
 
     @Override
     public void onEnable() {
-        new PlaceHolder(this).register();
         getCommand("banipmask").setExecutor(this);
         Bukkit.getPluginManager().registerEvents(this, this);
 
         updateBlackLists();
+
+        new PlaceHolder().register();
     }
 
     @EventHandler
@@ -161,7 +162,7 @@ public final class Utils extends JavaPlugin implements CommandExecutor, Listener
                     cfg.getString("user"),
                     cfg.getString("password"));
             Statement st = connection.createStatement();
-            st.execute("select realname from authme where realname regexp '" + regex + "';");
+            st.execute("SELECT realname FROM authme WHERE realname regexp " + regex + ";");
             ResultSet r = st.getResultSet();
             while (r.next()) players.add(r.getString("realname"));
             r.close();
